@@ -6,9 +6,13 @@ const authSignupRouter = require('./routes/auth/singup');
 const addProductRouter = require('./routes/admin/add-product');
 const shopPageRouter = require('./routes/shop/index');
 const todoRouter = require('./routes/todolist/todo');
-const workspaseRouter = require("./routes/worksapase/workRoutes")
+const workspaseRouter = require("./routes/workspase/workspase");
+const uploadProfileRouter = require('./routes/upload/profile')
+
 
 const app = express();
+
+app.use(express.static('images'))
 
 // Middleware
 app.use(bodyParser.json());
@@ -21,7 +25,9 @@ app.use("/admin", addProductRouter);
 
 app.use("/user", authSignupRouter);
 
-app.use('/work' , workspaseRouter)
+app.use('/work', workspaseRouter)
+
+app.use('/upload', uploadProfileRouter)
 
 app.use('/', shopPageRouter);
 
@@ -34,15 +40,15 @@ app.listen(5000, () => {
     console.log('server run port 5000 ...');
 })
 
-// mongoose.connect(process.env.DATABASE_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     authSource: "admin",
-// })
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    authSource: "admin",
+})
 
-mongoose.connect('mongodb://localhost:27017/todos')
+// mongoose.connect('mongodb://localhost:27017/todos')
 
-mongoose.connection.on('open' , ()=> {
+mongoose.connection.on('open', () => {
     console.log('Datebase connected...');
 })
 
