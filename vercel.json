@@ -11,5 +11,11 @@
             "src": "/(.*)",
             "dest": "/"
         }
+    ],
+    "disks": [
+        {
+            "name": "my-disk",
+            "mountTo": "images/profile"
+        }
     ]
   }
