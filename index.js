@@ -46,7 +46,15 @@ app.listen(5000, () => {
 //     authSource: "admin",
 // })
 
-mongoose.connect('mongodb://localhost:27017/todos')
+// mongoose.connect('mongodb://localhost:27017/todos')
+// Declare a variable named option and assign optional settings
+
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+};
+
+mongoose.connect('mongodb+srv://aliakbar80:aamfh1380@cluster0.ejvs5.mongodb.net/?retryWrites=true&w=majority' , options)
 
 mongoose.connection.on('open', () => {
     console.log('Datebase connected...');
