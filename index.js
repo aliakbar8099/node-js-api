@@ -12,7 +12,7 @@ const uploadProfileRouter = require('./routes/upload/profile')
 
 const app = express();
 
-app.use(express.static('images'))
+app.use(express.static('public'))
 
 // Middleware
 app.use(bodyParser.json());
