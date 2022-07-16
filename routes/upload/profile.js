@@ -25,6 +25,7 @@ router.post('/profile', auth, upload.single('avatar'), async (req, res) => {
 
     const users = await User.find().exec();
 
+
     const url = req.file.path.split('public\\')[1];
 
     const filteruser = users.find(item => item._id == req.user.id)
