@@ -212,6 +212,7 @@ router.post('/todos', auth, async (req, res) => {
 
 router.delete('/todos/:todosId', auth, async (req, res) => {
   const user = await User.findById(req.user.id).select('todos');
+
   const isUser = user.todos.filter(item => item.id == req.params.todosId)
   if (isUser.length === 0) {
     return res.status(400).json({ message: "این کار وجود ندارد" })
@@ -227,16 +228,25 @@ router.delete('/todos/:todosId', auth, async (req, res) => {
 
 
 router.put('/todos/:todosId', auth, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const findTodoIndex = user.todos.indexOf(await user.todos.find(item => item.id == req.params.todosId));
+
+  function updateArry(array, index, newValue) {
+    array[index] = newValue;
+    return array
+  }
+
   const newUser = await User.update(
     {},
     {
       $set: {
-        todos: {
+        todos: updateArry(user.todos, findTodoIndex, {
+          id: req.params.todosId,
           text: req.body.text,
           completed: req.body.completed,
           timeStart: req.body.timeStart,
-          timeEnd: req.body.timeEnd,
-        }
+          timeEnd: req.body.timeEnd
+        })
       },
     },
   );
