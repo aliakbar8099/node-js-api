@@ -7,6 +7,7 @@ const workSapaseSchema = new Schema({
     userCreate_id: { type: Number, required: true },
     userCreate_name: { type: String, required: true },
     name: { type: String, required: true },
+    // destination: { type: String, required: true },
     color: { type: String, required: true },
     team_member: [new Schema({
         userid: { type: Number, required: true },

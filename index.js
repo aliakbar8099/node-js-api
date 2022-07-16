@@ -40,13 +40,13 @@ app.listen(5000, () => {
     console.log('server run port 5000 ...');
 })
 
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    authSource: "admin",
-})
+// mongoose.connect(process.env.DATABASE_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     authSource: "admin",
+// })
 
-// mongoose.connect('mongodb://localhost:27017/todos')
+mongoose.connect('mongodb://localhost:27017/todos')
 
 mongoose.connection.on('open', () => {
     console.log('Datebase connected...');

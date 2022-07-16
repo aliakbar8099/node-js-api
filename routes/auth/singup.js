@@ -239,7 +239,6 @@ router.put('/todos/:todosId', auth, async (req, res) => {
         }
       },
     },
-    { multi: true }
   );
   res.send({ message: "کار مورد نظر ابدیت شد" })
 });
