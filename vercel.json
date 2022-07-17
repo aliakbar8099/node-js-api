@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "public":true,
     "builds": [
         {
             "src": "./index.js",
@@ -9,8 +8,11 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "/"
+            "handle": "filesystem"
+        },
+        {
+            "src": "/.*",
+            "dest": "index.js"
         }
     ]
-  }
+}
