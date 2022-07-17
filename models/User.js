@@ -33,6 +33,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  workspase_list_id : [new Schema({
+    id: Number,
+  }, { _id: false })],
   todos: [new Schema({
     id: Number,
     text: String,

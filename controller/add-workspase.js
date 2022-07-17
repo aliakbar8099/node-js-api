@@ -21,13 +21,18 @@ const getAllWork = async (req, res) => {
 }
 
 const get_workspase = async (req, res) => {
+    const listIdwork = []
     const user = await User.findById(req.user.id)
     const workspase = await WorkSapase.find().exec();
     const filterGetWorkFromCreateUser = workspase.filter(item => item.userCreate_id == user.userid)
+    const filterByworkspase_list_id = user.workspase_list_id.map(item=> workspase.find(i => i.id == item.id))
 
     res.json({
         message: 'لیست میز کار کاربر ها',
-        workspase: filterGetWorkFromCreateUser,
+        workspase: [
+            ...filterGetWorkFromCreateUser,
+            ...filterByworkspase_list_id
+        ],
         totalCount: filterGetWorkFromCreateUser.length,
         roles: user.roles
     });
@@ -71,9 +76,9 @@ const getSingleWork = async (req, res) => {
 const get_todos = async (req, res) => {
     const user = await User.findById(req.user.id)
 
-    
+
     const workspase = await WorkSapase.findById(req.body.workspase_id);
-    
+
     const findUser = workspase.team_member.find(item => item.userid == user.userid)
 
     res.json({
@@ -88,6 +93,7 @@ const get_todos = async (req, res) => {
 const postWork = async (req, res, next) => {
     try {
         const workspase = await WorkSapase.find().exec();
+        const userFind = await User.findById(req.user.id)
         const { userCreate_id, userCreate_name, name, color } = req.body;
         const user = await User.find().exec();
         let isUser = user.find(item => item.userid == userCreate_id)
@@ -126,6 +132,7 @@ const postWork = async (req, res, next) => {
         });
 
         await newWork.save()
+        // await userFind.save()
 
         res.status(201).json({ message: 'میز کار شما ایجاد شده است' });
 
@@ -148,6 +155,7 @@ const team_member = async (req, res) => {
         const user_id = await User.findById(req.user.id)
         let isUser = user.find(item => item.userid == req.body.userid)
 
+
         if (req.body.workspase_id == undefined) {
             return res.status(400).json({ message: 'شناسه میز کار را وارد کنید', "endpoint": "workspase_id" });
         }
@@ -164,6 +172,7 @@ const team_member = async (req, res) => {
         if (user_id.userid != workspase.userCreate_id) {
             return res.status(400).json({ message: 'فقط سازنده میزکار می تواند اعضا اضافه کند!' });
         }
+
         if (isUserWorkSpase.length !== 0) {
             return res.status(400).json({ message: 'کاربر مورد نظر درون تیم قبلا اضافه شده است' });
         }
@@ -178,6 +187,9 @@ const team_member = async (req, res) => {
             return res.status(400).json({ message: 'نام کاربری عضو جدید وارد کنید', "endpoint": "username" });
         }
 
+        const userFind = await User.findById(isUser._id)
+
+
         workspase.team_member.unshift({
             userid: req.body.userid,
             username: req.body.username,
@@ -185,7 +197,13 @@ const team_member = async (req, res) => {
             todos: []
         });
 
+        userFind.workspase_list_id.unshift({
+            id: parseInt(workspase.id),
+        });
+
         await workspase.save();
+        await userFind.save();
+
         res.json({
             message: "اعضا جدید به تیم با موفقیت اضافه شد",
         });
@@ -254,7 +272,7 @@ const del_team_member_todos = async (req, res) => {
 
 const put_team_member_todos = async (req, res) => {
     try {
-        
+
         const workspase = await WorkSapase.findById(req.body.workspase_id);
         const findUser = workspase.team_member.find(item => item._id == req.body.user_id)
 
@@ -288,15 +306,20 @@ const put_team_member_todos = async (req, res) => {
     }
 }
 
-exports.getAllWork = getAllWork
-exports.get_workspase = get_workspase
+exports.getAllWork = getAllWork //
+exports.get_workspase = get_workspase //
+
 exports.get_User = get_User
-exports.getSingleWork = getSingleWork
-exports.postWork = postWork
+
+exports.getSingleWork = getSingleWork //
+exports.postWork = postWork //
+
 exports.get_todos = get_todos
 exports.team_member = team_member
 exports.team_member_todos = team_member_todos
-exports.deleteWork = deleteWork
+
+exports.deleteWork = deleteWork //
+
 exports.delete_team = delete_team
 exports.del_team_member_todos = del_team_member_todos
 exports.put_team_member_todos = put_team_member_todos
