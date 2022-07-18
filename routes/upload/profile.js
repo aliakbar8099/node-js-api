@@ -12,6 +12,10 @@ router.post("/profile/image", auth, async (req, res) => {
 
     const { base64Image } = req.body
 
+    if(!base64Image){
+        return res.status(400).send({ message:"عکس نفرستادید"})
+    }
+
     const findUpload = listUpload.filter(item => item.userid == user.userid);
     const updateUpload = listUpload.find(item => item.userid == user.userid);
 
