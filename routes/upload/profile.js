@@ -83,6 +83,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.post('/profile', auth, upload.single('avatar'), async (req, res) => {
+    res.status(405).send({
+        res,
+        req
+    })
 
     const users = await User.find().exec();
 
@@ -97,7 +101,7 @@ router.post('/profile', auth, upload.single('avatar'), async (req, res) => {
         { multi: true }
     );
 
-    res.send({
+    res.status(200).send({
         avatar: req.headers.host + "/" + url,
     })
 })
