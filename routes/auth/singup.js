@@ -197,6 +197,7 @@ router.post('/todos', auth, async (req, res) => {
       completed: req.body.completed,
       timeStart: req.body.timeStart,
       timeEnd: req.body.timeEnd,
+      pointTime: req.body.pointTime
     });
 
     await user.save();

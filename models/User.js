@@ -47,7 +47,8 @@ const UserSchema = new Schema({
     timeEnd: {
       type: String,
       default: Date.now()
-    }
+    },
+    pointTime: { type: String , default: null}
   }, { _id: false })]
 });
 
