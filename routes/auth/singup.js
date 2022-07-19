@@ -202,8 +202,7 @@ router.post('/todos', auth, async (req, res) => {
 
     await user.save();
     res.json({
-      message: "کار جدید با موفقیت ثبت شد",
-      todos: user.todos
+      message: "کار جدید با موفقیت ثبت شد"
     });
   } catch (e) {
     console.log(e)
