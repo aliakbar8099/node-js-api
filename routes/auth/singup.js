@@ -247,6 +247,7 @@ router.put('/todos/:todosId', auth, async (req, res) => {
           completed: req.body.completed,
           timeStart: req.body.timeStart,
           timeEnd: req.body.timeEnd
+          pointTime: req.body.pointTime
         })
       },
     },
