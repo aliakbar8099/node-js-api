@@ -33,9 +33,11 @@ app.use('/work', workspaseRouter)
 
 app.use('/upload', express.json({ limit: '0.1MB' }), uploadProfileRouter)
 
-app.use('/list/:userid', async (req, res) => {
+app.use('/list/:id', async (req, res) => {
     const listUpload = await Upload.find().exec();
-    const find = listUpload.find((item) => item.id === req.params.userid)
+    const find = listUpload.find(item => item.userid == req.params.id)
+
+    console.log(find)
 
     res.send({ data: find })
 })
