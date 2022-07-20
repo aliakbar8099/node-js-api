@@ -6,6 +6,7 @@ const authSignupRouter = require('./routes/auth/singup');
 const addProductRouter = require('./routes/admin/add-product');
 const shopPageRouter = require('./routes/shop/index');
 const todoRouter = require('./routes/todolist/todo');
+const isLogin = require("./routes/isLoging")
 const workspaseRouter = require("./routes/workspase/workspase");
 const uploadProfileRouter = require('./routes/upload/profile')
 
@@ -29,7 +30,7 @@ app.use('/work', workspaseRouter)
 
 app.use('/upload', uploadProfileRouter)
 
-app.use('/', shopPageRouter);
+app.use('/', isLogin);
 
 app.use((req, res, next) => {
     res.status(404).send('<h1>404 - Not Found</h1>');
