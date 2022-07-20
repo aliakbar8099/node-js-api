@@ -16,7 +16,9 @@ const app = express();
 app.use(express.static('public'))
 
 // Middleware
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 app.use(cors({
     origin: '*'
 }));
@@ -28,7 +30,7 @@ app.use("/user", authSignupRouter);
 
 app.use('/work', workspaseRouter)
 
-app.use('/upload', uploadProfileRouter)
+app.use('/upload', express.json({ limit: '0.1MB' }), uploadProfileRouter)
 
 app.use('/', isLogin);
 
@@ -55,7 +57,7 @@ const options = {
     useUnifiedTopology: true
 };
 
-mongoose.connect('mongodb+srv://aliakbar80:aamfh1380@cluster0.ejvs5.mongodb.net/?retryWrites=true&w=majority' , options)
+mongoose.connect('mongodb+srv://aliakbar80:aamfh1380@cluster0.ejvs5.mongodb.net/?retryWrites=true&w=majority', options)
 
 mongoose.connection.on('open', () => {
     console.log('Datebase connected...');
