@@ -219,7 +219,7 @@ router.delete('/todos/:todosId', auth, async (req, res) => {
   }
 
   const updatedUser = await User.update(
-    {},
+    { _id: req.user.id },
     { $pull: { todos: { id: req.params.todosId } } },
     { multi: true }
   );
@@ -237,7 +237,7 @@ router.put('/todos/:todosId', auth, async (req, res) => {
   }
 
   const newUser = await User.update(
-    {},
+    { _id: req.user.id },
     {
       $set: {
         todos: updateArry(user.todos, findTodoIndex, {
