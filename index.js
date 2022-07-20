@@ -9,6 +9,7 @@ const todoRouter = require('./routes/todolist/todo');
 const isLogin = require("./routes/isLoging")
 const workspaseRouter = require("./routes/workspase/workspase");
 const uploadProfileRouter = require('./routes/upload/profile')
+const Upload = require("./models/upload")
 
 
 const app = express();
@@ -31,6 +32,12 @@ app.use("/user", authSignupRouter);
 app.use('/work', workspaseRouter)
 
 app.use('/upload', express.json({ limit: '0.1MB' }), uploadProfileRouter)
+
+app.use('/list', async (req, res) => {
+    const listUpload = await Upload.find().exec();
+
+    res.send({ message: listUpload })
+})
 
 app.use('/', isLogin);
 
