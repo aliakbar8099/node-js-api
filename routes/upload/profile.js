@@ -42,7 +42,7 @@ const multer = require('multer');
 
 // // })
 
-router.post('/profile/image', auth, async (req, res) => {
+router.post('/profile/image', async (req, res) => {
 
     const user = await User.findById(req.user.id)
     const listUpload = await Upload.find().exec();
