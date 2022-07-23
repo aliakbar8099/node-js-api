@@ -7,4 +7,4 @@ const uploadSchema = new Schema({
     base64Image: { type: String, required: true }
 });
 
-module.exports = mongoose.model("upload", uploadSchema);
+module.exports = mongoose.model("Task", uploadSchema);
