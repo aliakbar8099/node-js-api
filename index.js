@@ -39,7 +39,7 @@ app.use('/list/:id', async (req, res) => {
 
     console.log(find)
 
-    res.send({ data: find })
+    res.send({ data: find });
 })
 
 app.use('/', isLogin);
