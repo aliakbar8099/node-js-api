@@ -17,9 +17,7 @@ const app = express();
 app.use(express.static('public'))
 
 // Middleware
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors({origin: '*'}));
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

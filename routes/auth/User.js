@@ -106,7 +106,7 @@ router.post(
       });
       if (!user)
         return res.status(400).json({
-          message: "کاربر وجود دارد!"
+          message: "کاربر وجود دارد!",
         });
 
       const isMatch = await bcrypt.compare(password, user.password);
