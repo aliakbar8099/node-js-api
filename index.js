@@ -3,18 +3,16 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 var cors = require('cors');
 const authSignupRouter = require('./routes/auth/User');
-const addProductRouter = require('./routes/admin/add-product');
-const shopPageRouter = require('./routes/shop/index');
-const todoRouter = require('./routes/todolist/todo');
-const isLogin = require("./routes/isLoging")
+const isLogin = require("./routes/isLogin")
 const workspaseRouter = require("./routes/workspase/workspase");
 const uploadProfileRouter = require('./routes/upload/profile')
 const Upload = require("./models/upload")
 const UploadModel = require("./models/upload")
-const UserModel = require("./models/User")
+const TaskRoutes = require("./routes/task/task")
 
 
 const app = express();
+
 
 app.use(express.static('public'))
 
@@ -26,8 +24,6 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
-
-app.use("/admin", addProductRouter);
 
 app.use("/user", authSignupRouter);
 
@@ -72,6 +68,8 @@ app.post('/list/:id', async (req, res) => {
 
 })
 
+app.use('/', TaskRoutes);
+
 app.use('/', isLogin);
 
 app.use((req, res, next) => {
@@ -82,12 +80,6 @@ app.use((req, res, next) => {
 app.listen(5000, () => {
     console.log('server run port 5000 ...');
 })
-
-// mongoose.connect(process.env.DATABASE_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     authSource: "admin",
-// })
 
 // mongoose.connect('mongodb://localhost:27017/todos')
 // Declare a variable named option and assign optional settings

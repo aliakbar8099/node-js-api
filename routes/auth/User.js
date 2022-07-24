@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
+const Tasks = require("../../models/tasks");
 
 router.post(
   "/signup",
@@ -170,12 +171,18 @@ router.get('/', auth, async (req, res) => {
 
 });
 
-router.get('/todos', auth, async (req, res) => {
+router.get('/todos/:task_id', auth, async (req, res) => {
   try {
+    const task = await Tasks.findById(req.params.task_id);
     const user = await User.findById(req.user.id).select('todos');
+    const filterTodobyUser = user.todos.filter(item => item.task_id == req.params.task_id)
+
     res.json({
-      message: "لیست کارها",
-      todos: user.todos
+      task_title:task.title,
+      color:task.color,
+      isForWorksapce:task.isForWorksapce,
+      progess:task.progess,
+      todos: filterTodobyUser
     });
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
@@ -187,8 +194,8 @@ router.post('/todos', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
 
-    if(!req.body.task_id){
-      return res.status(400).send({ message: "Task_id وارد کن"})
+    if (!req.body.task_id) {
+      return res.status(400).send({ message: "Task_id وارد کن" })
     }
 
     user.todos.unshift({
@@ -243,6 +250,7 @@ router.put('/todos/:todosId', auth, async (req, res) => {
       $set: {
         todos: updateArry(user.todos, findTodoIndex, {
           id: req.params.todosId,
+          task_id: req.params.task_id,
           text: req.body.text,
           completed: req.body.completed,
           timeStart: req.body.timeStart,
