@@ -38,6 +38,7 @@ const UserSchema = new Schema({
   }, { _id: false })],
   todos: [new Schema({
     id: Number,
+    task_id:{ type : Number , required : true},
     text: String,
     completed: Boolean,
     timeStart: {

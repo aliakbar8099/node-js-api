@@ -187,12 +187,13 @@ router.post('/todos', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
 
-    // const todos = new User({
-    //   todos: req.body.todos
-    // });
+    if(!req.body.task_id){
+      return res.status(400).send({ message: "Task_id وارد کن"})
+    }
 
     user.todos.unshift({
       id: user.todos.length + 1,
+      task_id: req.body.task_id,
       text: req.body.text,
       completed: req.body.completed,
       timeStart: req.body.timeStart,
