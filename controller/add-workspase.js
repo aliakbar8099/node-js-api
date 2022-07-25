@@ -66,7 +66,6 @@ const getSingleWork = async (req, res) => {
         return res.status(404).json({ message: 'شناسه میز کار نادرست است' })
     }
     const workspase = await WorkSapase.findById(id);
-    console.log(workspase)
     if (!workspase) {
         return res.status(404).json({ message: 'میز کار یافت نشد' })
     }
@@ -208,7 +207,7 @@ const team_member = async (req, res) => {
             message: "اعضا جدید به تیم با موفقیت اضافه شد",
         });
     } catch (e) {
-        console.log(e)
+
         res.send({ message: "خطا در ارسال" });
     }
 }
@@ -249,7 +248,6 @@ const team_member_todos = async (req, res) => {
             message: "لیست روزانه جدید با موفیقیت اضافه شد",
         });
     } catch (e) {
-        console.log(e)
         res.send({ message: "خطا در ارسال" });
     }
 }
@@ -265,7 +263,6 @@ const del_team_member_todos = async (req, res) => {
         res.send({ message: "لیست کار مورد نظر با موفقیت حذف شد" });
 
     } catch (e) {
-        console.log(e)
         res.send({ message: "خطا در ارسال" });
     }
 }
@@ -301,7 +298,6 @@ const put_team_member_todos = async (req, res) => {
         res.send({ message: "لیست کار مورد نظر با موفقیت بروز رسانی شد" });
 
     } catch (e) {
-        console.log(e)
         res.send({ message: "خطا در ارسال" });
     }
 }

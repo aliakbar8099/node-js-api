@@ -76,7 +76,6 @@ router.post(
         }
       );
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("Error in Saving");
     }
   }
@@ -135,7 +134,6 @@ router.post(
         }
       );
     } catch (e) {
-      console.error(e);
       res.status(500).json({
         message: "Server Error"
       });
@@ -213,7 +211,7 @@ router.post('/todos', auth, async (req, res) => {
       message: "کار جدید با موفقیت ثبت شد"
     });
   } catch (e) {
-    console.log(e)
+
     res.send({ message: "خطا در ارسال" });
   }
 });

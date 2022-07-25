@@ -33,7 +33,6 @@ app.get('/list/:id', async (req, res) => {
     const listUpload = await Upload.find().exec();
     const find = listUpload.find(item => item.userid == req.params.id)
 
-    console.log(find)
 
     res.send({ data: find });
 })

@@ -1,5 +1,6 @@
 const express = require("express");
 const Task = require("../../models/tasks");
+const User = require("../../models/User");
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.post(path, auth, async (req, res) => {
             title,
             isForWorksapce: req.params.type == 1,
             color,
-            progess: 0
+            progess: 1
         })
 
         await newTask.save();
@@ -42,9 +43,9 @@ router.delete(path + "/:id", auth, async (req, res) => {
 
 })
 
-router.delete(path + "/:id", auth, async (req, res) => {
+router.put(path + "/:id", auth, async (req, res) => {
     const task = await Task.findById(req.params.id);
-    const { title, color } = req.body
+    const { title, color , progess} = req.body
 
     if (req.params.type == 0 || req.params.type == 1) {
 
@@ -52,7 +53,7 @@ router.delete(path + "/:id", auth, async (req, res) => {
             title, color,
             userid: req.user.id,
             isForWorksapce: req.params.type == 1,
-            progess: task.progess
+            progess
         });
 
         res.status(200).json({ message: "تسک مورد نظر حذف شد" })
@@ -64,7 +65,7 @@ router.delete(path + "/:id", auth, async (req, res) => {
 
 
 router.get("/task", auth, async (req, res) => {
-    const tasks = await Task.find().exec();
+    const tasks = await Task.find().exec();;
 
     const filterGetTaskUser = tasks.filter(item => item.userid == req.user.id)
 
