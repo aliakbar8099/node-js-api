@@ -248,7 +248,7 @@ router.put('/todos/:todosId', auth, async (req, res) => {
       $set: {
         todos: updateArry(user.todos, findTodoIndex, {
           id: req.params.todosId,
-          task_id: req.params.task_id,
+          task_id: req.body.task_id,
           text: req.body.text,
           completed: req.body.completed,
           timeStart: req.body.timeStart,
